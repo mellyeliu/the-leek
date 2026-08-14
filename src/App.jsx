@@ -894,7 +894,7 @@ function App() {
                 rel="noreferrer"
                 aria-label="Play Moments: The Game at moments.codes"
               >
-                <span className="network__game-kicker" aria-hidden="true">AN INTERACTIVE CORPORATE EXPERIENCE</span>
+                <span className="network__game-kicker" aria-hidden="true">FRESH MOMENTS · PROCESSED DAILY</span>
                 <span className="network__game-title" aria-hidden="true">
                   <b>M</b>
                   <svg className="network__leek-letter" viewBox="0 0 80 74">
@@ -904,11 +904,15 @@ function App() {
                       <path className="network__leek-detail" d="M29 62c7-11 13-20 19-29M27 67l-7 4m12-3-1 4m-8-8-9 1" />
                     </g>
                   </svg>
-                  <b>MENTS</b>
+                  <b>M</b><b>E</b><b>N</b><b>T</b><b>S</b>
                 </span>
                 <span className="network__game-footer" aria-hidden="true">
-                  <strong>THE GAME</strong>
-                  <span>PLAY NOW <ArrowRight size={12} /></span>
+                  <span className="network__game-edition">
+                    <strong>THE GAME</strong>
+                    <small>EVERY CHOICE HAS ALREADY BEEN MADE</small>
+                  </span>
+                  <i className="network__game-barcode" />
+                  <span className="network__game-play">ENTER<br /><b>NOW →</b></span>
                 </span>
               </a>
               <div className="network__links">

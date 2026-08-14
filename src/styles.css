@@ -596,84 +596,125 @@ img {
 .network__game-ad {
   position: relative;
   display: flex;
-  width: calc(100% - 12px);
-  min-height: 123px;
+  width: calc(100% - 14px);
+  min-height: 121px;
   flex-direction: column;
   justify-content: center;
   align-self: center;
   overflow: hidden;
-  padding: 11px 13px 10px;
-  border: 2px solid #101114;
-  color: #fff;
+  padding: 10px 11px 8px;
+  border: 1px solid #aaa9a3;
+  color: var(--blue);
   background:
-    radial-gradient(circle at 84% 17%, rgba(255,255,255,0.22), transparent 21%),
-    repeating-linear-gradient(135deg, transparent 0 10px, rgba(255,255,255,0.045) 10px 11px),
-    var(--blue);
-  box-shadow: 4px 4px 0 rgba(16, 17, 20, 0.2);
+    linear-gradient(90deg, rgba(52, 49, 42, 0.07), transparent 12%, transparent 84%, rgba(52, 49, 42, 0.06)),
+    repeating-linear-gradient(0deg, rgba(41, 39, 34, 0.024) 0 1px, transparent 1px 4px),
+    #f1efe7;
+  box-shadow:
+    4px 5px 6px rgba(16, 17, 20, 0.2),
+    inset 0 0 18px rgba(58, 54, 45, 0.08);
   text-decoration: none;
+  transform: rotate(-0.65deg);
+  transition: transform 120ms ease, box-shadow 120ms ease;
   white-space: nowrap;
 }
 
-.network__game-ad::after {
-  content: "AD";
+.network__game-ad::before {
+  content: "MOMENTS  MOMENTS  MOMENTS";
   position: absolute;
-  top: 5px;
-  right: 6px;
-  padding: 2px 3px;
-  border: 1px solid rgba(255,255,255,0.55);
-  color: rgba(255,255,255,0.76);
-  font-size: 6px;
+  top: -6px;
+  left: -4px;
+  color: rgba(8, 102, 255, 0.055);
+  font-family: "Eagle Bold", "Arial Black", sans-serif;
+  font-size: 21px;
+  letter-spacing: -0.08em;
+  pointer-events: none;
+  transform: rotate(1deg);
+}
+
+.network__game-ad::after {
+  content: "PAID REALITY";
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  padding: 2px 4px;
+  color: #f1efe7;
+  background: var(--blue);
+  font-size: 5px;
   font-weight: 950;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.11em;
+  transform: rotate(1.5deg);
 }
 
 .network__game-ad:hover {
-  color: #fff;
-  background-color: var(--deep-blue);
-  transform: translate(-1px, -1px);
-  box-shadow: 6px 6px 0 rgba(16, 17, 20, 0.23);
+  color: var(--deep-blue);
+  transform: translate(-1px, -1px) rotate(0deg);
+  box-shadow:
+    6px 7px 8px rgba(16, 17, 20, 0.22),
+    inset 0 0 18px rgba(58, 54, 45, 0.08);
 }
 
 .network__game-kicker {
+  position: relative;
+  z-index: 1;
   overflow: hidden;
-  margin-bottom: 2px;
-  font-size: clamp(6px, 0.51vw, 8px);
+  width: calc(100% - 42px);
+  margin-bottom: 1px;
+  font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(5px, 0.45vw, 7px);
   font-weight: 950;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-overflow: ellipsis;
 }
 
 .network__game-title {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
-  height: clamp(39px, 3.45vw, 53px);
+  justify-content: center;
+  height: clamp(43px, 3.65vw, 56px);
+  margin: -1px 0 1px;
   font-family: "Eagle Bold", "Arial Black", Impact, sans-serif;
-  font-size: clamp(32px, 2.75vw, 44px);
+  font-size: clamp(35px, 2.9vw, 47px);
   font-weight: 700;
-  letter-spacing: -0.075em;
+  letter-spacing: -0.11em;
   line-height: 0.8;
 }
 
 .network__game-title b {
+  display: inline-block;
   font: inherit;
 }
 
+.network__game-title b:nth-of-type(1) { transform: skewY(-5deg) scaleY(1.08); }
+.network__game-title b:nth-of-type(2) { transform: rotate(2deg) scaleX(0.88); }
+.network__game-title b:nth-of-type(3) { transform: translateY(2px) skewX(-8deg); }
+.network__game-title b:nth-of-type(4) {
+  padding: 0 0.035em;
+  color: #f1efe7;
+  background: var(--blue);
+  transform: rotate(-2deg) scaleY(1.03);
+}
+.network__game-title b:nth-of-type(5) { transform: translateY(-1px) rotate(1deg); }
+.network__game-title b:nth-of-type(6) { transform: skewY(4deg) scaleX(0.9); }
+
 .network__leek-letter {
-  width: 0.92em;
-  height: 1.14em;
+  width: 0.96em;
+  height: 1.22em;
   flex: 0 0 auto;
-  margin: -0.14em -0.08em -0.08em -0.09em;
+  margin: -0.19em -0.12em -0.12em -0.12em;
   overflow: visible;
+  transform: rotate(-4deg);
 }
 
 .network__infinity-leek {
   fill: none;
-  stroke: #fff;
+  stroke: currentColor;
   stroke-width: 5;
   stroke-linecap: round;
   stroke-linejoin: round;
   paint-order: stroke fill;
-  filter: drop-shadow(0 0 1.5px #fff);
+  filter: none;
 }
 
 .network__leek-stalk {
@@ -686,30 +727,67 @@ img {
 }
 
 .network__game-footer {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 3px;
-  padding-top: 5px;
-  border-top: 1px solid rgba(255,255,255,0.47);
+  gap: 6px;
+  margin-top: 1px;
+  padding-top: 4px;
+  border-top: 3px double currentColor;
 }
 
-.network__game-footer > strong {
-  font-size: clamp(9px, 0.8vw, 12px);
-  letter-spacing: 0.22em;
+.network__game-edition {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
 }
 
-.network__game-footer > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 3px 5px;
-  color: var(--blue);
-  background: #fff;
-  font-size: clamp(7px, 0.6vw, 9px);
-  font-weight: 950;
+.network__game-edition strong {
+  font-size: clamp(8px, 0.72vw, 11px);
+  letter-spacing: 0.19em;
+}
+
+.network__game-edition small {
+  overflow: hidden;
+  margin-top: 1px;
+  font-size: clamp(4px, 0.35vw, 5px);
+  font-weight: 900;
   letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+}
+
+.network__game-barcode {
+  width: 31px;
+  height: 20px;
+  flex: 0 0 auto;
+  background: repeating-linear-gradient(
+    90deg,
+    currentColor 0 1px,
+    transparent 1px 3px,
+    currentColor 3px 5px,
+    transparent 5px 6px
+  );
+  opacity: 0.82;
+}
+
+.network__game-play {
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  padding: 3px 5px 2px;
+  border: 2px solid currentColor;
+  font-size: clamp(5px, 0.42vw, 7px);
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  line-height: 0.92;
+  text-align: center;
+  transform: rotate(2deg);
+}
+
+.network__game-play b {
+  font-size: 1.12em;
 }
 
 .network__links {
