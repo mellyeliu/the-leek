@@ -1298,6 +1298,7 @@ footer {
     repeating-linear-gradient(90deg, transparent 0 39px, rgba(255,255,255,0.025) 39px 40px),
     #080a0f;
   user-select: none;
+  touch-action: none;
 }
 
 .cube-portal__header {
@@ -1369,7 +1370,7 @@ footer {
   height: var(--cube-size);
   perspective: 1500px;
   cursor: grab;
-  touch-action: auto;
+  touch-action: none;
   outline: none;
 }
 

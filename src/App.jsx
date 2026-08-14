@@ -237,15 +237,11 @@ function CubeStoryFace({ faceId, position, posterClass = '', eyebrow, headline, 
             <span>{article.category}</span>
             <button
               type="button"
-              onPointerDown={(event) => {
-                event.preventDefault()
+              data-cube-control="close"
+              data-cube-face-id={faceId}
+              onClick={(event) => {
                 event.stopPropagation()
                 onClose()
-              }}
-              onClick={(event) => {
-                // Keyboard and assistive-technology activation does not emit
-                // a pointerdown, so retain a click path as a fallback.
-                if (event.detail === 0) onClose()
               }}
             >
               <ArrowRight size={13} /> Back to cover
@@ -264,9 +260,13 @@ function CubeStoryFace({ faceId, position, posterClass = '', eyebrow, headline, 
           <button
             className="cube-face__read"
             type="button"
+            data-cube-control="open"
+            data-cube-face-id={faceId}
             aria-label={`Read ${article.title} on this cube face`}
-            onPointerDown={(event) => event.stopPropagation()}
-            onClick={onOpen}
+            onClick={(event) => {
+              event.stopPropagation()
+              onOpen()
+            }}
           >
             Click to read on this face
           </button>
@@ -282,6 +282,7 @@ function SiteCube({ onEnter }) {
   const [dragging, setDragging] = useState(false)
   const [expandedFaces, setExpandedFaces] = useState({})
   const dragRef = useRef(null)
+  const stageRef = useRef(null)
 
   useEffect(() => {
     const updateSize = () => {
@@ -300,12 +301,113 @@ function SiteCube({ onEnter }) {
     setExpandedFaces((current) => ({ ...current, [faceId]: false }))
   }
 
+  const faceNormals = {
+    front: [0, 0, 1],
+    predator: [0, 0, -1],
+    cto: [1, 0, 0],
+    vr: [-1, 0, 0],
+    award: [0, -1, 0],
+    monitoring: [0, 1, 0],
+  }
+
+  const faceFacingScore = (faceId) => {
+    const normal = faceNormals[faceId]
+    if (!normal) return -1
+    const x = rotation.x * Math.PI / 180
+    const y = rotation.y * Math.PI / 180
+    const [, normalY] = normal
+    const afterYz = -Math.sin(y) * normal[0] + Math.cos(y) * normal[2]
+    return Math.sin(x) * normalY + Math.cos(x) * afterYz
+  }
+
+  const pointInside = (rect, x, y) => (
+    x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
+  )
+
+  // Chromium occasionally paints a transformed face but omits its children
+  // from pointer hit-testing. Locate visible cube controls by their projected
+  // screen rectangles so those controls still have a dependable click path.
+  const controlAtPoint = (x, y) => {
+    const candidates = [...(stageRef.current?.querySelectorAll('[data-cube-control]') || [])]
+      .map((control) => {
+        const faceId = control.dataset.cubeFaceId
+        const rect = control.getBoundingClientRect()
+        const centerDistance = Math.hypot(
+          (x - (rect.left + rect.width / 2)) / Math.max(rect.width, 1),
+          (y - (rect.top + rect.height / 2)) / Math.max(rect.height, 1),
+        )
+        return {
+          action: control.dataset.cubeControl,
+          faceId,
+          rect,
+          facing: faceFacingScore(faceId),
+          centerDistance,
+        }
+      })
+      .filter(({ rect, facing }) => facing > 0.005 && pointInside(rect, x, y))
+      .sort((a, b) => a.centerDistance - b.centerDistance || b.facing - a.facing)
+
+    return candidates[0] || null
+  }
+
+  const expandedArticleAtPoint = (x, y, allowFacingFallback = false) => {
+    const candidates = Object.entries(expandedFaces)
+      .filter(([, expanded]) => expanded)
+      .map(([faceId]) => {
+        const face = stageRef.current?.querySelector(`[data-cube-face="${faceId}"]`)
+        return face && {
+          faceId,
+          face,
+          rect: face.getBoundingClientRect(),
+          facing: faceFacingScore(faceId),
+        }
+      })
+      .filter((entry) => entry && entry.facing > 0.005)
+      .sort((a, b) => b.facing - a.facing)
+
+    const containingFace = candidates.find(({ rect }) => pointInside(rect, x, y))
+    const stageRect = stageRef.current?.getBoundingClientRect()
+    const fallbackFace = allowFacingFallback
+      && stageRect
+      && pointInside(stageRect, x, y)
+      && candidates[0]?.facing > 0.35
+      ? candidates[0]
+      : null
+
+    return (containingFace || fallbackFace)?.face.querySelector('.cube-article__body') || null
+  }
+
+  const handleControlPointerDown = (event) => {
+    if (event.button !== 0) return
+    const control = controlAtPoint(event.clientX, event.clientY)
+    if (!control) return
+
+    event.preventDefault()
+    event.stopPropagation()
+    event.currentTarget.setPointerCapture(event.pointerId)
+    dragRef.current = {
+      mode: 'control',
+      control,
+      startX: event.clientX,
+      startY: event.clientY,
+      lastX: event.clientX,
+      lastY: event.clientY,
+      distance: 0,
+    }
+  }
+
   const handlePointerDown = (event) => {
     if (event.button !== 0) return
     if (event.target.closest('button, a, input, select, textarea')) return
 
     const articleFace = event.target.closest('.cube-face--article')
     const articleScroller = articleFace?.querySelector('.cube-article__body')
+      || expandedArticleAtPoint(event.clientX, event.clientY)
+    const directFace = event.target.closest('.cube-face')
+    const stageRect = stageRef.current?.getBoundingClientRect()
+    const insideStage = stageRect && pointInside(stageRect, event.clientX, event.clientY)
+
+    if (!articleScroller && !directFace && !insideStage) return
 
     if (articleScroller && event.pointerType === 'mouse') {
       const bounds = articleScroller.getBoundingClientRect()
@@ -328,7 +430,7 @@ function SiteCube({ onEnter }) {
       return
     }
 
-    const faceId = event.target.closest('.cube-face')?.dataset.cubeFace
+    const faceId = directFace?.dataset.cubeFace
     event.currentTarget.setPointerCapture(event.pointerId)
     dragRef.current = {
       startX: event.clientX,
@@ -358,6 +460,8 @@ function SiteCube({ onEnter }) {
       return
     }
 
+    if (drag.mode === 'control') return
+
     setRotation((current) => ({
       x: Math.max(-80, Math.min(80, current.x - deltaY * 0.32)),
       y: current.y + deltaX * 0.38,
@@ -372,6 +476,13 @@ function SiteCube({ onEnter }) {
       event.currentTarget.releasePointerCapture(event.pointerId)
     }
     if (drag?.mode === 'article-scroll') return
+    if (drag?.mode === 'control') {
+      if (drag.distance < 14) {
+        if (drag.control.action === 'close') closeFace(drag.control.faceId)
+        else openFace(drag.control.faceId)
+      }
+      return
+    }
     if (drag && drag.distance < 14) {
       if (drag.faceId === 'front') {
         onEnter()
@@ -384,6 +495,7 @@ function SiteCube({ onEnter }) {
   const handleWheel = (event) => {
     const articleFace = event.target.closest('.cube-face--article')
     const scroller = articleFace?.querySelector('.cube-article__body')
+      || expandedArticleAtPoint(event.clientX, event.clientY, true)
     if (!scroller || scroller.scrollHeight <= scroller.clientHeight) return
 
     event.preventDefault()
@@ -399,29 +511,27 @@ function SiteCube({ onEnter }) {
   const previewScale = cubeSize / 1500
 
   return (
-    <section className="cube-portal" aria-label="Interactive cube view">
+    <section
+      className="cube-portal"
+      aria-label="Interactive cube view"
+      onPointerDownCapture={handleControlPointerDown}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onWheel={handleWheel}
+      onPointerCancel={() => { dragRef.current = null; setDragging(false) }}
+    >
       <div className="cube-portal__header">
         <div className="cube-portal__brand"><Mark compact /><strong>THE LEEK</strong><span>CUBE EDITION</span></div>
         <p>Drag to rotate · Click a story face to open it</p>
         <button type="button" onClick={onEnter}>Enter flat view <ArrowRight size={16} /></button>
       </div>
       <div
+        ref={stageRef}
         className={`cube-stage${dragging ? ' cube-stage--dragging' : ''}`}
         style={{ '--cube-size': `${cubeSize}px` }}
-        role="button"
-        tabIndex="0"
+        role="group"
         aria-label="Drag to rotate The Leek cube; click a story face to read it"
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onWheel={handleWheel}
-        onPointerCancel={() => { dragRef.current = null; setDragging(false) }}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault()
-            onEnter()
-          }
-        }}
       >
         <div className="site-cube" style={{ transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)` }}>
           <div className="cube-face cube-face--front" data-cube-face="front">
@@ -493,7 +603,6 @@ function SiteCube({ onEnter }) {
           />
         </div>
       </div>
-      <p className="cube-portal__hint">One site. Six approved realities.</p>
     </section>
   )
 }
