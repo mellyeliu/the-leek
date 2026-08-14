@@ -449,6 +449,7 @@ img {
 .masthead__logo {
   display: flex;
   align-items: center;
+  gap: 6px;
   margin-top: 0;
   color: var(--ink);
   text-decoration: none;
@@ -488,7 +489,7 @@ img {
 }
 
 .masthead__the {
-  margin-right: 10px;
+  margin-right: 4px;
   font-family: "Eagle Bold", "Arial Black", Impact, sans-serif;
   font-size: clamp(50px, 4.6vw, 74px);
   font-weight: 700;
@@ -1090,12 +1091,13 @@ img {
 
 .trending {
   min-width: 0;
-  padding-left: 14px;
+  padding: 10px 0 0 14px;
   border-left: 1px solid var(--rule);
 }
 
 .trending h2 {
-  display: inline-block;
+  display: block;
+  width: 100%;
   margin: 0 0 7px;
   padding: 11px 14px 9px;
   color: white;
@@ -1106,20 +1108,40 @@ img {
 }
 
 .trend-card {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 114px;
-  gap: 13px;
+  grid-template-columns: 27px minmax(0, 1fr) 104px;
+  gap: 10px;
+  align-items: start;
   width: 100%;
-  padding: 14px 0;
+  padding: 13px 0;
   border: 0;
   border-bottom: 1px solid var(--rule);
-  background: none;
+  background: linear-gradient(90deg, transparent, transparent);
   cursor: pointer;
   text-align: left;
+  transition: background 140ms ease, padding 140ms ease;
 }
 
-.trend-card:hover strong {
+.trend-card:hover {
+  padding-right: 5px;
+  padding-left: 5px;
+  background: linear-gradient(90deg, rgba(8,102,255,0.09), rgba(8,102,255,0.015));
+}
+
+.trend-card:hover strong,
+.trend-card:hover .trend-card__rank {
   color: var(--blue);
+}
+
+.trend-card__rank {
+  padding-top: 2px;
+  color: #a3a8b1;
+  font-family: "Eagle Bold", "Arial Black", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  transition: color 140ms ease;
 }
 
 .trend-card__copy {
@@ -1128,28 +1150,57 @@ img {
 
 .trend-card small {
   display: block;
-  margin-bottom: 9px;
+  margin-bottom: 6px;
   color: var(--blue);
-  font-size: 12px;
-  font-weight: 900;
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .trend-card strong {
   display: block;
   font-family: "Rocky Condensed", Georgia, "Times New Roman", serif;
-  font-size: 21px;
+  font-size: 19px;
   font-weight: 400;
   letter-spacing: -0.006em;
   line-height: 1.02;
   transition: color 150ms ease;
 }
 
+.trend-card__media {
+  position: relative;
+  display: block;
+  width: 104px;
+  height: 76px;
+  overflow: hidden;
+  background: #dfe6f1;
+}
+
 .trend-card img {
-  width: 114px;
-  height: 78px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  filter: saturate(0.8);
+  filter: saturate(0.72) contrast(1.05);
+  transition: filter 140ms ease, transform 180ms ease;
+}
+
+.trend-card:hover img {
+  filter: saturate(1) contrast(1.07);
+  transform: scale(1.035);
+}
+
+.trend-card__media i {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  padding: 3px 4px;
+  color: #fff;
+  background: rgba(8, 102, 255, 0.9);
+  font-size: 6px;
+  font-style: normal;
+  font-weight: 950;
+  letter-spacing: 0.05em;
 }
 
 .signal-strip {
@@ -2380,11 +2431,12 @@ footer {
   }
 
   .trend-card {
-    grid-template-columns: minmax(0, 1fr) 88px;
+    grid-template-columns: 23px minmax(0, 1fr) 84px;
+    gap: 8px;
   }
 
-  .trend-card img {
-    width: 88px;
+  .trend-card__media {
+    width: 84px;
     height: 70px;
   }
 
@@ -2460,10 +2512,26 @@ footer {
   }
 
   .trend-card {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
     align-items: stretch;
+  }
+
+  .trend-card__rank {
+    position: absolute;
+    top: 20px;
+    left: 6px;
+    z-index: 2;
+    padding: 3px 5px;
+    color: #fff;
+    background: var(--blue);
+    font-size: 14px;
+  }
+
+  .trend-card__copy {
+    grid-row: 2;
   }
 
   .trend-card + .trend-card {
@@ -2471,7 +2539,8 @@ footer {
     border-left: 1px solid var(--rule);
   }
 
-  .trend-card img {
+  .trend-card__media {
+    grid-row: 1;
     width: 100%;
     height: 110px;
   }
@@ -2573,9 +2642,22 @@ footer {
 
   .trend-card {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 112px;
+    grid-template-columns: 26px minmax(0, 1fr) 112px;
     grid-template-rows: auto;
     padding: 14px 0;
+  }
+
+  .trend-card__rank {
+    position: static;
+    padding: 2px 0 0;
+    color: #a3a8b1;
+    background: transparent;
+    font-size: 17px;
+  }
+
+  .trend-card__copy,
+  .trend-card__media {
+    grid-row: auto;
   }
 
   .trend-card + .trend-card {
@@ -2583,7 +2665,7 @@ footer {
     border-left: 0;
   }
 
-  .trend-card img {
+  .trend-card__media {
     width: 112px;
     height: 76px;
   }

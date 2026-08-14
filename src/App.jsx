@@ -48,7 +48,6 @@ const floatingAds = [
     eyebrow: 'HEADCOUNT.AI™ · ENTERPRISE SOFTWARE',
     title: 'Reduce payroll 40% before lunch.',
     cta: 'BOOK DEMO',
-    finePrint: 'Automate teams. Accelerate severance.',
     actionMessage: 'Your enterprise layoff demo has been booked for 6 AM.',
     theme: 'electric',
     startX: 0.05,
@@ -984,7 +983,7 @@ function App() {
             <aside className="trending" aria-labelledby="trending-title">
               <h2 id="trending-title">TRENDING IN YOUR BUBBLE</h2>
               <div className="trending__list">
-                {trends.map((trend) => (
+                {trends.map((trend, index) => (
                   <button
                     className="trend-card"
                     type="button"
@@ -993,11 +992,15 @@ function App() {
                       ? setActiveArticle(trend.article)
                       : setToast('Added to your highly specific interests')}
                   >
+                    <span className="trend-card__rank" aria-hidden="true">0{index + 1}</span>
                     <span className="trend-card__copy">
                       <small>{trend.section}</small>
                       <strong>{trend.title}</strong>
                     </span>
-                    <img src={trend.image} alt="" />
+                    <span className="trend-card__media">
+                      <img src={trend.image} alt="" />
+                      <i aria-hidden="true">↑ {['840', '666', '404'][index]}%</i>
+                    </span>
                   </button>
                 ))}
               </div>
