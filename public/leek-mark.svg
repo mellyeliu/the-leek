@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 76">
+  <title>The Leek</title>
+  <g fill="none" stroke="#0866ff" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 61c7-11 13-21 19-31l12 8C46 48 40 58 35 68c-6 1-10-1-13-7Z" stroke-width="5"/>
+    <path d="M43 34C36 21 36 10 42 2c5 11 7 22 5 34M48 36C50 20 58 9 71 4c-3 14-10 25-20 35M50 40c11-9 21-10 28-4-7 8-16 11-28 9" stroke-width="5"/>
+    <path d="M29 62c7-11 13-20 19-29" stroke-width="3"/>
+    <path d="m27 67-7 4m12-3-1 4m-8-8-9 1" stroke-width="3.5"/>
+  </g>
+</svg>

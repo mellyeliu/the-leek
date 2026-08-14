@@ -191,12 +191,14 @@ function Mark({ compact = false }) {
   return (
     <svg
       className={compact ? 'mark mark--compact' : 'mark'}
-      viewBox="0 0 74 46"
+      viewBox="0 0 80 72"
       role="img"
       aria-label="The Leek mark"
     >
-      <path d="M4 35C12 6 23 4 37 31C50 4 63 6 70 35" />
-      <circle cx="37" cy="31" r="3.2" />
+      <path className="mark__stalk" d="M22 61c7-11 13-21 19-31l12 8C46 48 40 58 35 68c-6 1-10-1-13-7Z" />
+      <path className="mark__leaf" d="M43 34C36 21 36 10 42 2c5 11 7 22 5 34M48 36C50 20 58 9 71 4c-3 14-10 25-20 35M50 40c11-9 21-10 28-4-7 8-16 11-28 9" />
+      <path className="mark__stalk-line" d="M29 62c7-11 13-20 19-29" />
+      <path className="mark__roots" d="m27 67-7 4m12-3-1 4m-8-8-9 1" />
     </svg>
   )
 }
@@ -204,15 +206,31 @@ function Mark({ compact = false }) {
 function MiniPaper() {
   return (
     <div className="mini-paper" aria-hidden="true">
-      <div className="mini-paper__fold" />
-      <div className="mini-paper__mast"><Mark compact /> THE LEEK</div>
-      <div className="mini-paper__rule" />
-      <div className="mini-paper__columns">
-        <span />
-        <span />
+      <div className="mini-paper__shadow" />
+      <div className="mini-paper__roll">
         <span />
       </div>
-      <div className="mini-paper__photo" />
+      <div className="mini-paper__sheet">
+        <div className="mini-paper__ghost">THE LEEK&nbsp;&nbsp; AI REPLACES AI&nbsp;&nbsp; THE LEEK</div>
+        <div className="mini-paper__topline">
+          <span className="mini-paper__inside">INSIDE</span>
+          <div className="mini-paper__mast"><Mark compact /><b>the LEEK</b></div>
+          <span className="mini-paper__issue">VOL. 1 · ISSUE 404</span>
+        </div>
+        <div className="mini-paper__green-rule" />
+        <div className="mini-paper__front">
+          <div className="mini-paper__photo"><span /></div>
+          <div className="mini-paper__lead">
+            <small>SILICON VALLEY’S FINEST NEWS SOURCE</small>
+            <strong>Workers Drafted To Label Own Replacements</strong>
+            <div className="mini-paper__columns">
+              <span /><span /><span />
+            </div>
+          </div>
+          <div className="mini-paper__stamp">AI<br />EDITION</div>
+        </div>
+      </div>
+      <div className="mini-paper__band" />
     </div>
   )
 }
@@ -869,9 +887,30 @@ function App() {
             </section>
 
             <section className="network" aria-label="Social links and newsletter">
-              <div className="network__wordmark">
-                <span>REALITY</span><i>/</i><strong>OS</strong>
-              </div>
+              <a
+                className="network__game-ad"
+                href="https://moments.codes"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Play Moments: The Game at moments.codes"
+              >
+                <span className="network__game-kicker" aria-hidden="true">AN INTERACTIVE CORPORATE EXPERIENCE</span>
+                <span className="network__game-title" aria-hidden="true">
+                  <b>M</b>
+                  <svg className="network__leek-letter" viewBox="0 0 80 74">
+                    <g className="network__infinity-leek" transform="translate(3 1) scale(.9)">
+                      <path className="network__leek-stalk" d="M22 61c7-11 13-21 19-31l12 8C46 48 40 58 35 68c-6 1-10-1-13-7Z" />
+                      <path d="M43 34C36 21 36 10 42 2c5 11 7 22 5 34M48 36C50 20 58 9 71 4c-3 14-10 25-20 35M50 40c11-9 21-10 28-4-7 8-16 11-28 9" />
+                      <path className="network__leek-detail" d="M29 62c7-11 13-20 19-29M27 67l-7 4m12-3-1 4m-8-8-9 1" />
+                    </g>
+                  </svg>
+                  <b>MENTS</b>
+                </span>
+                <span className="network__game-footer" aria-hidden="true">
+                  <strong>THE GAME</strong>
+                  <span>PLAY NOW <ArrowRight size={12} /></span>
+                </span>
+              </a>
               <div className="network__links">
                 <button className="newsletter-link" type="button" onClick={() => setNewsletterOpen(true)}>
                   <Mail size={18} /> Newsletter
