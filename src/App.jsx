@@ -62,7 +62,7 @@ const floatingAds = [
     cta: 'CLONE NOW',
     actionMessage: 'Your Zuck Clone is incubating. Please prepare a spare metaverse.',
     theme: 'warning',
-    portrait: '/assets/ceo-portrait.jpg',
+    portrait: '/assets/zuckbot-portrait.png',
     startX: 0.68,
     startY: 0.62,
     velocityX: -48,
@@ -97,7 +97,7 @@ const webParityStory = {
   category: 'Marketplace · Metaverse Resuscitation',
   title: 'VR Parity Agent x Marketplace: They’ve Shipped Bullshit',
   paragraphs: [
-    <><strong>MENLO PARK, CA — </strong>In a desperate attempt to resurrect the metaverse, engineers celebrated a major breakthrough in agentic software development Thursday after VR Parity Agent successfully shipped several Marketplace features by identifying missing mobile-to-web functionality, failing to implement it correctly, and then routing the task to Marketplace engineers, who implemented it correctly. “Before AI, Marketplace engineers had to build Marketplace features themselves,” said one project lead. “Now they can build Marketplace features themselves with us watching.” Leadership called the system transformative, noting that simply assigning Marketplace engineers to web work would have constituted regular work and therefore produced no usable AI impact slide.</>,
+    <><strong>MENLO PARK, CA — </strong>In a desperate attempt to resurrect the metaverse, engineers celebrated a major breakthrough in agentic software development Thursday after VR Parity Agent successfully shipped several Marketplace features by identifying missing human-to-AI/VR pipeline functionality, failing to implement it correctly, and then routing the task to Marketplace engineers, who implemented it correctly. “Before AI, Marketplace engineers had to build Marketplace features themselves,” said one project lead. “Now they can build Marketplace features themselves with us watching.” Leadership called the system transformative, noting that simply assigning Marketplace engineers to web work would have constituted regular work and therefore produced no usable AI impact slide.</>,
     <>Marketplace engineers said they were especially impressed by the agent’s ability to convert a two-day task into a week-long collaboration involving generated code, broken integrations, multiple debugging sessions, and eventually the original two-day task. Once the human engineer finishes the implementation, the system records another successful autonomous migration. Internal benchmarks initially showed the workflow taking substantially longer than direct implementation, prompting researchers to retire “time” as a legacy pre-AI productivity metric and replace it with executive enthusiasm, demo count, and number of shipped features containing the word “agentic.”</>,
     <>Disgruntled employees have since immortalized the initiative by printing <strong>VR PARODY AGENT</strong> stickers and quietly distributing them around the office.</>,
   ],
@@ -107,7 +107,7 @@ const anotherPredatorStory = {
   category: 'Breaking News',
   title: 'Another Predator',
   paragraphs: [
-    <><strong>MENLO PARK, CA — </strong>Employees at a major technology company were reportedly stunned Friday after the organization identified its seventh predator, narrowly surpassing the previous quarterly record of six. “It’s just shocking every time,” said one engineer, standing beneath an org chart containing three people everyone had separately described as “probably fine, just don’t be alone with him.” Leadership stressed that there had been no obvious warning signs beyond years of complaints, strange jokes, private warnings, abrupt team transfers, and the unusual number of women who responded to his name by making the exact same face.</>,
+    <><strong>MENLO PARK, CA — </strong>Employees at a major technology company were reportedly stunned Friday after the organization identified its seventh predator, narrowly surpassing the previous quarterly record of six. “It’s just shocking every time,” said one engineer, standing beneath an org chart containing three people everyone had separately described as “probably fine, just don’t be alone with him.” Leadership stressed that there had been no obvious warning signs beyond years of complaints, strange jokes, private warnings, abrupt team transfers, and the unusual number of employees who responded to his name by making the exact same face.</>,
     <>Coworkers said the man’s behavior had long been understood as a collection of unrelated workplace phenomena. The surviving record consisted of disappearing messages, unsolicited personality assessments, comments on employees’ eye color, and enough deleted GChat history to suggest the man was being managed primarily through oral tradition. Leadership has classified the incident as a tooling gap.</>,
     <>Senior leadership promised to learn from the discovery, announcing a new initiative encouraging employees to speak up sooner, ideally before the company has already developed several informal folk traditions for avoiding someone. At press time, workers were quietly debating whether another widely respected senior employee was “actually kind of weird” or merely the sort of man whose arrival at happy hour causes four women to leave at once.</>,
   ],
@@ -296,6 +296,7 @@ function CubeStoryFace({ faceId, position, posterClass = '', eyebrow, headline, 
 function SiteCube({ onEnter }) {
   const [rotation, setRotation] = useState({ x: -13, y: 24 })
   const [cubeSize, setCubeSize] = useState(620)
+  const [isPhoneViewport, setIsPhoneViewport] = useState(() => window.innerWidth <= 700)
   const [dragging, setDragging] = useState(false)
   const [expandedFaces, setExpandedFaces] = useState({})
   const dragRef = useRef(null)
@@ -303,6 +304,7 @@ function SiteCube({ onEnter }) {
 
   useEffect(() => {
     const updateSize = () => {
+      setIsPhoneViewport(window.innerWidth <= 700)
       setCubeSize(Math.max(270, Math.min(660, window.innerWidth * 0.68, window.innerHeight * 0.68)))
     }
     updateSize()
@@ -554,7 +556,7 @@ function SiteCube({ onEnter }) {
           <div className="cube-face cube-face--front" data-cube-face="front">
             <iframe
               title="Live preview of The Leek"
-              src={`${window.location.pathname}?embed=1`}
+              src={`${window.location.pathname}?embed=1${isPhoneViewport ? '&phonePreview=1' : ''}`}
               style={{ width: '1500px', height: '1500px', transform: `scale(${previewScale})` }}
               tabIndex="-1"
             />
@@ -598,7 +600,7 @@ function SiteCube({ onEnter }) {
           <CubeStoryFace
             faceId="award"
             position="top"
-            posterClass="cube-face--signal"
+            posterClass="cube-face--signal cube-face--data-camp"
             eyebrow="AI LABOR · MANDATORY SERVICE"
             headline={<>DRAFTED TO<br />THE DATA<br />LABELLING CAMP</>}
             blurb="The model still cannot tell “urgent” from “EOD.”"
@@ -728,7 +730,9 @@ function BouncingAd({ ad, index, onAction }) {
 }
 
 function App() {
-  const isEmbedded = new URLSearchParams(window.location.search).get('embed') === '1'
+  const urlParams = new URLSearchParams(window.location.search)
+  const isEmbedded = urlParams.get('embed') === '1'
+  const isPhonePreview = urlParams.get('phonePreview') === '1'
   const [cubeOpen, setCubeOpen] = useState(() => !isEmbedded)
   const [activeArticle, setActiveArticle] = useState(null)
   const [newsletterOpen, setNewsletterOpen] = useState(false)
@@ -843,7 +847,7 @@ function App() {
 
   return (
     <>
-      <div className="page-shell">
+      <div className={`page-shell${isPhonePreview ? ' page-shell--phone-preview' : ''}`}>
         <header className="site-header">
           <div className="header-grid">
             <section className="membership" aria-label="Membership and edition details">
@@ -1156,7 +1160,9 @@ function App() {
               onClick={() => setCaptchaChecked((checked) => !checked)}
             >
               <span>{captchaChecked && <Check size={22} />}</span>
-              <strong>I have experienced a performance review</strong>
+              <strong>
+                I have experienced <del>a performance review</del> <ins>checkpoints</ins>
+              </strong>
             </button>
             <p className="captcha-modal__fineprint">Verification uses cursor anxiety, tab-switch velocity, and willingness to respond after 6 PM.</p>
             <div className="captcha-modal__actions">

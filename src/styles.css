@@ -90,6 +90,21 @@ img {
   border-bottom: 1px solid var(--rule);
 }
 
+/* The cube's live face uses a fixed 1500px document and then scales it down.
+   Give the printed top-right promo more of that canvas on actual phones. */
+.page-shell--phone-preview .header-grid {
+  grid-template-columns: minmax(225px, 0.72fr) minmax(500px, 1.25fr) minmax(370px, 1.2fr);
+}
+
+.page-shell--phone-preview .network {
+  padding-left: 8px;
+}
+
+.page-shell--phone-preview .network__game-ad {
+  width: calc(100% - 5px);
+  min-height: 134px;
+}
+
 .membership,
 .network,
 .masthead {
@@ -1296,9 +1311,24 @@ img {
   gap: 26px;
 }
 
+.digest-card {
+  position: relative;
+  min-width: 0;
+}
+
 .digest-card + .digest-card {
-  padding-left: 26px;
-  border-left: 1px solid var(--rule);
+  padding-left: 0;
+  border-left: 0;
+}
+
+.digest-card + .digest-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -13px;
+  width: 1px;
+  background: var(--rule);
 }
 
 .digest-card__image-wrap {
@@ -2356,6 +2386,21 @@ footer {
   font-size: 14px;
 }
 
+.captcha-check del {
+  color: #737983;
+  text-decoration-color: #101114;
+  text-decoration-thickness: 2px;
+}
+
+.captcha-check ins {
+  color: var(--blue);
+  font-family: "Facebook Reader Italic", Georgia, serif;
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 400;
+  text-decoration: none;
+}
+
 .captcha-modal__fineprint {
   margin: 0;
   padding: 10px 22px 18px;
@@ -2458,6 +2503,7 @@ footer {
 
   .header-grid {
     display: block;
+    height: auto;
     min-height: 0;
   }
 
@@ -2547,6 +2593,11 @@ footer {
 }
 
 @media (max-width: 700px) {
+  .cube-face--data-camp > strong {
+    font-size: clamp(29px, calc(var(--cube-size) * 0.1), 58px);
+    line-height: 0.94;
+  }
+
   .cube-portal__header {
     top: 12px;
     left: 13px;
@@ -2706,6 +2757,10 @@ footer {
     padding: 25px 0 0;
     border-top: 1px solid var(--rule);
     border-left: 0;
+  }
+
+  .digest-card + .digest-card::before {
+    display: none;
   }
 
   .digest-card h3 {
