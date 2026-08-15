@@ -1102,7 +1102,6 @@ function App() {
               <>
                 <p className="eyebrow">The Daily Download</p>
                 <h2 id="newsletter-title">News for people who already refreshed twice.</h2>
-                <p>One fictional briefing each morning. No tracking, except emotionally.</p>
                 <form onSubmit={submitNewsletter}>
                   <label htmlFor="email">Email address</label>
                   <div className="email-field">
@@ -1139,7 +1138,6 @@ function App() {
                 I have experienced <del>a performance review</del> <ins>checkpoints</ins>
               </strong>
             </button>
-            <p className="captcha-modal__fineprint">Verification uses cursor anxiety, tab-switch velocity, and willingness to respond after 6 PM.</p>
             <div className="captcha-modal__actions">
               <button type="button" onClick={() => setCaptchaOpen(false)}>Cancel</button>
               <button type="button" disabled={!captchaChecked} onClick={verifyHuman}>Verify humanity</button>
