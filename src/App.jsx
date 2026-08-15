@@ -95,7 +95,7 @@ const leadStory = {
 
 const webParityStory = {
   category: 'Marketplace · Metaverse Resuscitation',
-  title: 'VR Parity Agent x Marketplace: They’ve Shipped Bullshit',
+  title: 'Metaverse Agent Successfully Converts Two-Day Task Into Week-Long Initiative',
   paragraphs: [
     <><strong>MENLO PARK, CA — </strong>In a desperate attempt to resurrect the metaverse, engineers celebrated a major breakthrough in agentic software development Thursday after VR Parity Agent successfully shipped several Marketplace features by identifying missing human-to-AI/VR pipeline functionality, failing to implement it correctly, and then routing the task to Marketplace engineers, who implemented it correctly. “Before AI, Marketplace engineers had to build Marketplace features themselves,” said one project lead. “Now they can build Marketplace features themselves with us watching.” Leadership called the system transformative, noting that simply assigning Marketplace engineers to web work would have constituted regular work and therefore produced no usable AI impact slide.</>,
     <>Marketplace engineers said they were especially impressed by the agent’s ability to convert a two-day task into a week-long collaboration involving generated code, broken integrations, multiple debugging sessions, and eventually the original two-day task. Once the human engineer finishes the implementation, the system records another successful autonomous migration. Internal benchmarks initially showed the workflow taking substantially longer than direct implementation, prompting researchers to retire “time” as a legacy pre-AI productivity metric and replace it with executive enthusiasm, demo count, and number of shipped features containing the word “agentic.”</>,
@@ -105,7 +105,7 @@ const webParityStory = {
 
 const anotherPredatorStory = {
   category: 'Breaking News',
-  title: 'Another Predator',
+  title: 'Org Identifies Seventh Predator After Years Of Successful Denial',
   paragraphs: [
     <><strong>MENLO PARK, CA — </strong>Employees at a major technology company were reportedly stunned Friday after the organization identified its seventh predator, narrowly surpassing the previous quarterly record of six. “It’s just shocking every time,” said one engineer, standing beneath an org chart containing three people everyone had separately described as “probably fine, just don’t be alone with him.” Leadership stressed that there had been no obvious warning signs beyond years of complaints, strange jokes, private warnings, abrupt team transfers, and the unusual number of employees who responded to his name by making the exact same face.</>,
     <>Coworkers said the man’s behavior had long been understood as a collection of unrelated workplace phenomena. The surviving record consisted of disappearing messages, unsolicited personality assessments, comments on employees’ eye color, and enough deleted GChat history to suggest the man was being managed primarily through oral tradition. Leadership has classified the incident as a tooling gap.</>,
@@ -151,15 +151,14 @@ const trends = [
   },
   {
     section: 'Breaking News',
-    title: 'Another Predator',
+    title: 'Org Identifies Seventh Predator After Years Of Successful Denial',
     image: '/assets/office.jpg',
     article: anotherPredatorStory,
   },
   {
-    section: 'Leadership',
-    title: 'CTO Once Again Uses All-Hands To Workshop Personal Essay',
+    section: 'Cloud Infrastructure',
+    title: 'Cloud Team Celebrates 30% Latency Reduction Across Civilian Casualty Pipeline',
     image: '/assets/laptop.jpg',
-    article: ctoEssayStory,
   },
 ]
 
@@ -205,31 +204,7 @@ function Mark({ compact = false }) {
 function MiniPaper() {
   return (
     <div className="mini-paper" aria-hidden="true">
-      <div className="mini-paper__shadow" />
-      <div className="mini-paper__roll">
-        <span />
-      </div>
-      <div className="mini-paper__sheet">
-        <div className="mini-paper__ghost">THE LEEK&nbsp;&nbsp; AI REPLACES AI&nbsp;&nbsp; THE LEEK</div>
-        <div className="mini-paper__topline">
-          <span className="mini-paper__inside">INSIDE</span>
-          <div className="mini-paper__mast"><Mark compact /><b>the LEEK</b></div>
-          <span className="mini-paper__issue">VOL. 1 · ISSUE 404</span>
-        </div>
-        <div className="mini-paper__green-rule" />
-        <div className="mini-paper__front">
-          <div className="mini-paper__photo"><span /></div>
-          <div className="mini-paper__lead">
-            <small>SILICON VALLEY’S FINEST NEWS SOURCE</small>
-            <strong>Workers Drafted To Label Own Replacements</strong>
-            <div className="mini-paper__columns">
-              <span /><span /><span />
-            </div>
-          </div>
-          <div className="mini-paper__stamp">AI<br />EDITION</div>
-        </div>
-      </div>
-      <div className="mini-paper__band" />
+      <img src="/assets/leek-newspaper.png" alt="" />
     </div>
   )
 }
@@ -962,10 +937,10 @@ function App() {
               <p className="lead-deck">{leadStory.subtitle}</p>
               <div className="lead-briefs">
                 <button type="button" onClick={() => setActiveArticle(webParityStory)}>
-                  VR Parity Agent x Marketplace: They’ve Shipped Bullshit
+                  Metaverse Agent Successfully Converts Two-Day Task Into Week-Long Initiative
                 </button>
-                <button type="button" onClick={() => setToast('Your training labels have been accepted')}>
-                  Meta Announces New Layoffs To Fund AI Agent That Explains Previous Layoffs
+                <button type="button" onClick={() => setActiveArticle(ctoEssayStory)}>
+                  CTO Once Again Uses All-Hands To Workshop Personal Essay
                 </button>
               </div>
               <button className="latest-link" type="button" onClick={() => setActiveArticle(leadStory)}>

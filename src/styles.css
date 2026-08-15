@@ -91,18 +91,9 @@ img {
 }
 
 /* The cube's live face uses a fixed 1500px document and then scales it down.
-   Give the printed top-right promo more of that canvas on actual phones. */
-.page-shell--phone-preview .header-grid {
-  grid-template-columns: minmax(225px, 0.72fr) minmax(500px, 1.25fr) minmax(370px, 1.2fr);
-}
-
-.page-shell--phone-preview .network {
-  padding-left: 8px;
-}
-
-.page-shell--phone-preview .network__game-ad {
-  width: calc(100% - 5px);
-  min-height: 134px;
+   Enlarge only the rolled newspaper when that face is viewed on a phone. */
+.page-shell--phone-preview .mini-paper {
+  width: min(320px, calc(100% - 2px));
 }
 
 .membership,
@@ -145,13 +136,17 @@ img {
 }
 
 .mini-paper {
-  --paper-accent: var(--blue);
   position: relative;
-  width: min(268px, calc(100% - 8px));
-  aspect-ratio: 3.38 / 1;
+  width: min(286px, calc(100% - 8px));
+  aspect-ratio: auto;
   margin-top: 2px;
-  filter: drop-shadow(0 7px 5px rgba(21, 25, 31, 0.23));
-  transform: perspective(420px) rotateX(5deg) rotateZ(0.8deg);
+  transform: rotate(0.4deg);
+}
+
+.mini-paper > img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .mini-paper__shadow {
@@ -472,7 +467,7 @@ img {
 }
 
 .mark {
-  width: clamp(62px, 4.9vw, 78px);
+  width: clamp(66px, 5.15vw, 84px);
   height: auto;
   overflow: visible;
   fill: none;
@@ -506,23 +501,23 @@ img {
 .masthead__the {
   margin-right: 4px;
   font-family: "Eagle Bold", "Arial Black", Impact, sans-serif;
-  font-size: clamp(50px, 4.6vw, 74px);
+  font-size: clamp(53px, 4.85vw, 78px);
   font-weight: 700;
   letter-spacing: -0.045em;
 }
 
 .masthead__feed {
   font-family: "Eagle Bold", Impact, "Arial Black", sans-serif;
-  font-size: clamp(70px, 6.15vw, 98px);
+  font-size: clamp(74px, 6.45vw, 104px);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 0.88;
 }
 
 .masthead__tagline {
-  margin: -8px 0 0;
+  margin: -13px 0 0;
   color: #787b82;
-  font-family: "Facebook Reader Italic", Georgia, "Times New Roman", serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 16px;
   font-style: italic;
   font-weight: 400;
@@ -2174,7 +2169,7 @@ footer {
   z-index: 55;
   width: min(310px, calc(100vw - 20px));
   overflow: hidden;
-  border: 2px solid #111318;
+  border: 1px solid #111318;
   background: #fff;
   box-shadow: 7px 7px 0 rgba(17, 19, 24, 0.24);
   will-change: transform;
@@ -2216,7 +2211,7 @@ footer {
   place-items: center;
   padding: 0;
   border: 0;
-  border-left: 1px solid currentColor;
+  border-left: 1px solid color-mix(in srgb, currentColor 58%, transparent);
   color: inherit;
   background: transparent;
   cursor: pointer;
