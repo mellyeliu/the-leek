@@ -700,11 +700,16 @@ img {
 .network__game-title b:nth-of-type(1) { transform: skewY(-5deg) scaleY(1.08); }
 .network__game-title b:nth-of-type(2) { transform: rotate(2deg) scaleX(0.88); }
 .network__game-title b:nth-of-type(3) { transform: translateY(2px) skewX(-8deg); }
-.network__game-title b:nth-of-type(4) {
+.network__game-letter--blocked {
   padding: 0 0.035em;
   color: #f1efe7;
-  background: var(--blue);
+  background: #101114;
   transform: rotate(-2deg) scaleY(1.03);
+}
+
+.network__game-ad:hover .network__game-letter--blocked {
+  color: #f1efe7;
+  background: #101114;
 }
 .network__game-title b:nth-of-type(5) { transform: translateY(-1px) rotate(1deg); }
 .network__game-title b:nth-of-type(6) { transform: skewY(4deg) scaleX(0.9); }
@@ -1870,11 +1875,47 @@ footer {
 .cube-face {
   position: absolute;
   inset: 0;
+  isolation: isolate;
   overflow: hidden;
   border: 2px solid rgba(143, 183, 255, 0.72);
   background: #fff;
   box-shadow: inset 0 0 42px rgba(8, 102, 255, 0.12);
   backface-visibility: hidden;
+}
+
+/* A fine, uneven grain keeps the cube from reading like six perfect sheets of
+   plastic. The live front face gets an extra layer of worn newsprint below. */
+.cube-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='.55'/%3E%3C/svg%3E");
+  background-size: 150px 150px;
+  mix-blend-mode: soft-light;
+  opacity: 0.24;
+}
+
+.cube-face--newspaper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(56, 48, 34, 0.08), transparent 7%, transparent 91%, rgba(56, 48, 34, 0.08)),
+    radial-gradient(ellipse at 28% 16%, rgba(115, 102, 75, 0.1), transparent 29%),
+    radial-gradient(ellipse at 76% 84%, rgba(115, 102, 75, 0.08), transparent 34%);
+  box-shadow:
+    inset 0 0 48px rgba(53, 46, 34, 0.13),
+    inset 0 0 0 5px rgba(255, 253, 246, 0.16);
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+}
+
+.cube-face--newspaper::after {
+  opacity: 0.38;
 }
 
 .cube-face--front { transform: translateZ(calc(var(--cube-size) / 2)); }
@@ -1910,6 +1951,7 @@ footer {
   background: rgba(7, 10, 17, 0.9);
   box-shadow: 0 5px 18px rgba(0,0,0,0.3);
   backdrop-filter: blur(5px);
+  z-index: 9;
 }
 
 .cube-face__enter span {
@@ -1944,10 +1986,12 @@ footer {
 }
 
 .cube-face--poster > strong {
+  width: 100%;
   font-family: "Eagle Bold", "Arial Black", sans-serif;
   font-size: clamp(32px, calc(var(--cube-size) * 0.105), 72px);
+  font-weight: 700;
   letter-spacing: -0.035em;
-  line-height: 0.88;
+  line-height: 0.92;
 }
 
 .cube-face--poster > small {
@@ -1958,7 +2002,8 @@ footer {
 
 .cube-face__read {
   position: relative;
-  z-index: 2;
+  /* Keep the paper grain on the face, not over the interactive state. */
+  z-index: 9;
   align-self: flex-start;
   margin-top: 5%;
   padding: 6px 8px;
@@ -1971,10 +2016,12 @@ footer {
   letter-spacing: 0.07em;
   text-transform: uppercase;
   touch-action: manipulation;
+  transition: color 120ms ease, background-color 120ms ease, border-color 120ms ease;
 }
 
 .cube-face__read:hover,
 .cube-face__read:focus-visible {
+  border-color: #111318;
   color: #fff;
   background: #111318;
   outline: none;
@@ -1984,6 +2031,7 @@ footer {
 .cube-face--blue .cube-face__read:focus-visible,
 .cube-face--dark .cube-face__read:hover,
 .cube-face--dark .cube-face__read:focus-visible {
+  border-color: #fff;
   color: #111318;
   background: #fff;
 }
@@ -2015,7 +2063,11 @@ footer {
 }
 
 .cube-face--signal > span {
-  color: #101114;
+  color: #f23855;
+}
+
+.cube-face--signal > small {
+  color: #df6048;
 }
 
 .cube-face--signal > strong {
@@ -2060,6 +2112,8 @@ footer {
 }
 
 .cube-article__topline > button {
+  position: relative;
+  z-index: 9;
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -2199,7 +2253,8 @@ footer {
   padding-left: 8px;
   color: var(--ad-contrast);
   background: var(--ad-accent);
-  font-size: 9px;
+  font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  font-size: 8px;
   font-weight: 950;
   letter-spacing: 0.075em;
 }
@@ -2251,7 +2306,7 @@ footer {
 
 .floating-ad__content--portrait > strong {
   grid-column: 2;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .floating-ad__content--portrait .floating-ad__cta {
@@ -2264,9 +2319,10 @@ footer {
 }
 
 .floating-ad__content > strong {
-  font-family: "Eagle Bold", "Arial Black", sans-serif;
-  font-size: 17px;
-  line-height: 1.02;
+  font-family: "Rocky Condensed", Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 0.96;
 }
 
 .floating-ad__cta {
@@ -2277,7 +2333,8 @@ footer {
   padding: 6px 7px;
   color: var(--ad-contrast);
   background: var(--ad-accent);
-  font-size: 9px;
+  font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  font-size: 8px;
   font-weight: 950;
   white-space: nowrap;
 }

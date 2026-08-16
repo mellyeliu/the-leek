@@ -129,7 +129,7 @@ const impossibleInfrastructureStory = {
   paragraphs: [
     <><strong>MENLO PARK, CA — </strong>An engineer who spent nine months shipping an infrastructure project involving three build environments, a new rendering architecture, migration tooling, production safeguards, and several systems experts described by management as “literally impossible to coordinate” was reportedly thrilled Thursday to learn that the org’s highest-profile recognition had gone instead to a favored employee who made an AI demo where a chatbot changed a button from blue to green. “Holy shit,” said one director as the button became green. “This is exactly the kind of technical ambition we need.”</>,
     <>Sources said the infrastructure project had quietly unblocked dozens of teams and eliminated several longstanding architectural constraints, while the AI demo’s creator pursued an equally demanding technical challenge of attending yacht clubs with the director. The AI demo, meanwhile, successfully generated a settings page after being prompted three times and manually corrected off-camera, earning its creator praise for “rethinking what engineering can be.”</>,
-    <>At press time, the overlooked engineer had been asked to help productionize the award-winning demo because it did not currently work outside the demo. Leadership praised the collaboration as “a great opportunity for them to increase their visibility” and encouraged them to learn from their newly promoted colleague’s ability to operate at the next level.</>,
+    <>At press time, the engineer had been asked to help productionize the award-winning demo because it did not currently work outside the demo. Leadership praised the collaboration as “a great opportunity for them to increase their visibility” and encouraged them to learn from their newly promoted colleague’s ability to operate at the next level.</>,
   ],
 }
 
@@ -528,7 +528,7 @@ function SiteCube({ onEnter }) {
         aria-label="Drag to rotate The Leek cube; click a story face to read it"
       >
         <div className="site-cube" style={{ transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)` }}>
-          <div className="cube-face cube-face--front" data-cube-face="front">
+          <div className="cube-face cube-face--front cube-face--newspaper" data-cube-face="front">
             <iframe
               title="Live preview of The Leek"
               src={`${window.location.pathname}?embed=1${isPhoneViewport ? '&phonePreview=1' : ''}`}
@@ -882,7 +882,7 @@ function App() {
                       <path className="network__leek-detail" d="M29 62c7-11 13-20 19-29M27 67l-7 4m12-3-1 4m-8-8-9 1" />
                     </g>
                   </svg>
-                  <b>M</b><b>E</b><b>N</b><b>T</b><b>S</b>
+                  <b>M</b><b>E</b><b className="network__game-letter--blocked">N</b><b>T</b><b>S</b>
                 </span>
                 <span className="network__game-footer" aria-hidden="true">
                   <span className="network__game-edition">
