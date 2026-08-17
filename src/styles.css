@@ -700,17 +700,7 @@ img {
 .network__game-title b:nth-of-type(1) { transform: skewY(-5deg) scaleY(1.08); }
 .network__game-title b:nth-of-type(2) { transform: rotate(2deg) scaleX(0.88); }
 .network__game-title b:nth-of-type(3) { transform: translateY(2px) skewX(-8deg); }
-.network__game-letter--blocked {
-  padding: 0 0.035em;
-  color: #f1efe7;
-  background: #101114;
-  transform: rotate(-2deg) scaleY(1.03);
-}
-
-.network__game-ad:hover .network__game-letter--blocked {
-  color: #f1efe7;
-  background: #101114;
-}
+.network__game-title b:nth-of-type(4) { transform: rotate(-2deg) scaleY(1.03); }
 .network__game-title b:nth-of-type(5) { transform: translateY(-1px) rotate(1deg); }
 .network__game-title b:nth-of-type(6) { transform: skewY(4deg) scaleX(0.9); }
 
@@ -1646,6 +1636,10 @@ footer {
   border: 0;
   background: #f0f2f5;
   cursor: pointer;
+}
+
+.article-modal .modal-close {
+  background: transparent;
 }
 
 .newsletter-modal__art {

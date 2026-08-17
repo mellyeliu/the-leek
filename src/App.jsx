@@ -87,7 +87,7 @@ const leadStory = {
   title: 'Employees Drafted To Data Labelling Camp Until Model Can Tell “Urgent” From “EOD”',
   subtitle: 'Mandatory service expands as leadership races to replace human judgment with correctly labelled human judgment.',
   paragraphs: [
-    <><strong>MENLO PARK, CA — </strong>Thousands of employees were transferred Thursday to a converted office park now operating as a 24-hour data-labeling camp after the company’s newest productivity model failed to distinguish between “urgent,” “EOD,” “when you get a chance,” and “no rush.” Workers sleep beneath conference-room whiteboards, receive one Soylent per completed batch, and spend 14-hour shifts classifying Slack messages into categories including <strong>actually urgent</strong>, <strong>manager urgent</strong>, <strong>fake urgent</strong>, and <strong>urgent because somebody ignored it for six weeks</strong>. Lights remain on at all times so annotators do not accidentally introduce “circadian bias” into the training set.</>,
+    <><strong>MENLO PARK, CA — </strong>Thousands of employees were transferred Thursday to a converted office park now operating as a 24-hour data-labeling camp after the company’s newest productivity model failed to distinguish between “urgent,” “EOD,” “when you get a chance,” and “no rush.” Workers sleep beneath conference-room whiteboards, receive one Soylent per completed batch, and spend 14-hour shifts classifying GChat messages into categories including <strong>actually urgent</strong>, <strong>manager urgent</strong>, <strong>fake urgent</strong>, and <strong>urgent because somebody ignored it for six weeks</strong>. Lights remain on at all times so annotators do not accidentally introduce circadian bias into the training set.</>,
     <>Leadership described the conditions as a temporary sacrifice necessary to eliminate tedious human work. “Once the model understands workplace context, nobody will ever have to do this again,” said one executive over a loudspeaker as several thousand engineers manually labeled whether “quick q” meant a quick question or the complete destruction of their afternoon. Employees who fall below 98.7% inter-annotator agreement are sent to calibration, where they watch eight consecutive hours of managers saying “just bumping this” until their judgment converges with the ground truth.</>,
     <>At press time, researchers reported a major breakthrough after the model correctly inferred that “EOD” means “before I wake up tomorrow and decide this is your fault.” Celebration in the barracks lasted approximately six minutes before the model interpreted “no rush” as meaning no rush, triggering the sirens and returning the entire workforce to stations for another quarter.</>,
   ],
@@ -119,7 +119,7 @@ const ctoEssayStory = {
   paragraphs: [
     <><strong>SAN FRANCISCO, CA — </strong>Employees at a major technology company confirmed Tuesday that their CTO had spent most of the week publishing 4,000-word internal essays about suffering, greatness, cowardice, birth, death. Sources stressed that the executive’s meteoric rise had absolutely nothing to do with having previously served as the CEO’s college TA, explaining that he simply happened to demonstrate extraordinary leadership potential from the unusually advantageous position of standing next to the CEO every day. “People love calling everyone a nepo baby now,” said one VP. “This is completely different. Nobody is related.”</>,
     <>The executive has also increasingly incorporated layoffs into his personal mythology, repeatedly describing workforce reductions with the proprietary excitement of a man who appears to believe he discovered them. “Before this, companies simply kept everyone forever,” said one engineer after reading the CTO’s latest meditation on organizational courage, in which firing thousands of people was presented as a difficult conceptual breakthrough comparable to splitting the atom. Employees who remain insufficiently energized by the resulting company are periodically encouraged to quit, an approach leadership says has successfully transformed voluntary attrition into proof that the CTO was right.</>,
-    <>At press time, workers received another midnight essay instructing them to “ask your parents why they chose to bring you into this world, and then ask yourself what you have done to justify that decision,” followed by several paragraphs about excellence, a reference to ancient Sparta, and a graph showing headcount declining. “I think he wants us to ship faster,” said one staff engineer. “But I did call my mom, and she said he sounds exhausting.”</>,
+    <>Workers received another midnight essay instructing them to “ask your parents why they chose to bring you into this world, and then ask yourself what you have done to justify that decision,” followed by several paragraphs about excellence, a reference to ancient Sparta, and a graph showing headcount declining. “I think he wants us to ship faster,” said one staff engineer. “But I did call my mom, and she said he sounds exhausting.”</>,
   ],
 }
 
@@ -138,8 +138,8 @@ const employeeMonitoringStory = {
   title: 'Company Reassures Employees Laptop Monitoring Software Only Records Things They Do On Laptop',
   paragraphs: [
     <><strong>MENLO PARK, CA — </strong>Company leadership reassured employees Thursday that newly discovered monitoring software installed on corporate laptops posed no meaningful privacy risk, despite having access to bank passwords, middle-school emo selfies, medical portals, breakup drafts, and the humiliating search queries employees had assumed would die with them. “We take privacy extremely seriously,” said a spokesperson. “That’s why access to this information is limited to the company.”</>,
-    <>Executives emphasized that the telemetry would never be used to evaluate individual performance, except for security, workforce planning, internal investigations, promotion calibration, attrition prediction, or determining why an employee searched “can my employer see incognito mode” seven times in one afternoon. Employees attempting to inspect or disable the monitoring client will automatically be flagged under <strong>Suspicious Interest In Privacy</strong>.</>,
-    <>At press time, workers had begun moving sensitive conversations into the parking lot, only to return to their desks and find a notification reading, <strong>WE NOTICED YOU STOPPED TYPING FOR 18 MINUTES. HOPE EVERYTHING’S OK.</strong></>,
+    <>Executives emphasized that the telemetry would never be used to evaluate individual performance, except for security, workforce planning, internal investigations, promotion calibration, attrition prediction, or determining why an employee searched “can my employer see incognito mode” seven times in one afternoon. Employees attempting to inspect or disable the monitoring client will automatically be flagged for suspicious interest in privacy.</>,
+    <>The company terminated an engineer after monitoring software caught them writing a 70,000-word fanfic in which the company’s CEO implants a lab-engineered chicken egg in himself and gives birth to Elon Musk. “Getting fired was hard,” said the engineer, whose manuscript sold for seven figures the following morning. “But I’m grateful the surveillance software believed in my work before management did.”</>,
   ],
 }
 
@@ -708,6 +708,12 @@ function App() {
   const urlParams = new URLSearchParams(window.location.search)
   const isEmbedded = urlParams.get('embed') === '1'
   const isPhonePreview = urlParams.get('phonePreview') === '1'
+  const currentDate = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date())
   const [cubeOpen, setCubeOpen] = useState(() => !isEmbedded)
   const [activeArticle, setActiveArticle] = useState(null)
   const [newsletterOpen, setNewsletterOpen] = useState(false)
@@ -833,7 +839,7 @@ function App() {
                 </button>
               </div>
               <div className="edition-line">
-                <span>Friday, August 14, 2026</span>
+                <span>{currentDate}</span>
                 <span className="weather"><CloudSun size={21} /> 81°</span>
               </div>
             </section>
@@ -882,7 +888,7 @@ function App() {
                       <path className="network__leek-detail" d="M29 62c7-11 13-20 19-29M27 67l-7 4m12-3-1 4m-8-8-9 1" />
                     </g>
                   </svg>
-                  <b>M</b><b>E</b><b className="network__game-letter--blocked">N</b><b>T</b><b>S</b>
+                  <b>M</b><b>E</b><b>N</b><b>T</b><b>S</b>
                 </span>
                 <span className="network__game-footer" aria-hidden="true">
                   <span className="network__game-edition">
